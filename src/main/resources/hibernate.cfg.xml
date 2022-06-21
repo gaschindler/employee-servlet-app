@@ -36,11 +36,11 @@
       <property name="connection.pool_size">10</property>
       
       
-      <!--  This will show all of the SQL statemnets that hibernate is generating for us -->
+      <!--  This will show all of the SQL statements that hibernate is generating for us -->
       <property name="hibernate.show_sql">true</property>
       
       <!-- List of persistent classes -->
-      <mapping class = ""/>
+      <mapping class ="com.revature.models.Employee"/>
       
    </session-factory>
 </hibernate-configuration>

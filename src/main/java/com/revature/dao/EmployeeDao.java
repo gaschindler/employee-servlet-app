@@ -40,12 +40,12 @@ public class EmployeeDao {
 	
 	// (Update) the corresponding Employee in the DB
 	public boolean update(Employee e) {
-		
+		return false;
 	}
 	
 	// (Delete) the Employee in the DB with the passed id
 	public boolean delete(int id) {
-		
+		return false;
 	}
 	
 }
