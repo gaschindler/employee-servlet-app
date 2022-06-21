@@ -14,7 +14,7 @@ public class EmployeeDao {
 	
 	// (Create) a new Employee object and persist them to the DB
 	public int insert(Employee e) {
-		// grab the seesion object
+		// grab the session object
 		Session ses = HibernateUtil.getSession();
 		
 		// begin a tx
@@ -28,7 +28,14 @@ public class EmployeeDao {
 	
 	// (Read) all Employees in the DB and return them in a list
 	public List<Employee> findAll() {
+		// grab the session object
+		Session ses = HibernateUtil.getSession();
 		
+		// make an HQL -- Hibernate Query Language: odd mix of OOP & native SQL
+		List<Employee> emps = ses.createQuery("from Employee", Employee.class).list();
+		
+		// return the list of employees
+		return emps;
 	}
 	
 	// (Update) the corresponding Employee in the DB
