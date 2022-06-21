@@ -10,29 +10,36 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class FrontController
  */
 public class FrontController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public FrontController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * This method will be responsible for determining what resource
+	 * the client is requesting
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// 1. URI rewriting
+		// http://localhost:8080/employee-servlet-app/login -- capture "login"
+		// http://localhost:8080/employee-servlet-app/employees -- capture "employees"
+		final String URI = request.getRequestURI().replace("/employee-servlet-app/", "");
+		
+		// set up a switch case statement in which we call the
+		// appropriate functionality based on the URI returned
+		switch (URI) {
+		case "login":
+			// invoke some functionality from the RequestHelper
+			RequestHelper.processLogin(request, response);
+			break;
+		case "employees":
+			// invoke some functionality from the RequestHelper
+			
+			break;
+		default:
+			// custom error page
+			
+			break;
+		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
