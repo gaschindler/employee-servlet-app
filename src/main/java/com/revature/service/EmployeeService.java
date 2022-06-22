@@ -42,4 +42,12 @@ public class EmployeeService {
 		return edao.findAll();
 	}
 	
+	/**
+	 * Return the primary key of the newly inserted Employee,
+	 * or -1 if the insert failed
+	 */
+	public int register(Employee e) {
+		return edao.insert(e);
+	}
+	
 }

@@ -2,6 +2,7 @@ package com.revature.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -54,6 +55,54 @@ public class RequestHelper {
 //			response.setStatus(204); // 204 means successful connection to the server, but no content found
 			out.println("<h3>No user found, sorry.</h3>");
 		}
+	}
+	
+	public static void processRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		// extract all values from the parameters
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		// construct a new Employee object
+		Employee e = new Employee(firstname, lastname, username, password);
+		
+		// call the register() method from the service layer
+		int pk = eserv.register(e);
+		
+		// check its ID... if it's > 0 it's successful
+		if (pk > 0) {
+			e.setId(pk);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("the-user", e);
+			
+			request.getRequestDispatcher("welcome.html").forward(request, response);
+		} else {
+			PrintWriter out = response.getWriter();
+			response.setContentType("text/html");
+			
+			out.println("<h1>Registration failed. User already exists.</h1>");
+			out.println("<a href=\"index.html\">Back</a>");
+		}
+	}
+	
+	/**
+	 * This method will call the EmployeeService's getAll method()
+	 * and use an ObjectMapper to transform that list to a JSON String
+	 * and use the PrinterWriter to print out that JSON string to
+	 * the screen
+	 */
+	public static void processEmployees(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		response.setContentType("application/json");
+		
+		List<Employee> emps = eserv.getAll();
+		
+		String jsonString = om.writeValueAsString(emps);
+		
+		PrintWriter out = response.getWriter();
+		// notice write function instead of println
+		out.write(jsonString);
 	}
 	
 }
